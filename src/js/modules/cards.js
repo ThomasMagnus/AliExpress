@@ -1,9 +1,10 @@
-const cards = () => {
+import { getData } from './services/data'
+
+const cards = async () => {
 
 	const goodsWrapper = document.querySelector('.goods-wrapper');
 
-	fetch('../../../db/db.json')
-		.then(data => data.json())
+	await getData('db/db.json')
 		.then(response => {
 
 			response.forEach(card => {

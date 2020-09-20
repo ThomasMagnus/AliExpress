@@ -1,11 +1,16 @@
 import cards from './modules/cards';
 import modal from './modules/modal';
 import tabs from './modules/tabs';
+import addToBasket from './modules/addToBasket';
 
-window.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
 	'use strict'
 
 	cards()
-	modal()
-	tabs()
+		.then(() => {
+			modal()
+			tabs()
+			addToBasket()
+		})
+
 })

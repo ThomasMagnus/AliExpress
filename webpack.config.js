@@ -1,9 +1,12 @@
+require('babel-polyfill');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-	entry: path.resolve(__dirname, 'src/js/main.js'),
+	entry: {
+		app: ['babel-polyfill', './src/js/main.js'],
+	},
 	output: {
 		path: path.resolve(__dirname, 'dist/js'),
 		filename: '[name].[hash].js',
