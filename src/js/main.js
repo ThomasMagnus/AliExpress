@@ -2,6 +2,7 @@ import cards from './modules/cards';
 import modal from './modules/modal';
 import tabs from './modules/tabs';
 import addToBasket from './modules/addToBasket';
+import addToLikes from './modules/addToLikes';
 
 document.addEventListener('DOMContentLoaded', () => {
 	'use strict'
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			modal()
 			tabs()
 			addToBasket()
+			addToLikes()
 		})
 
 })

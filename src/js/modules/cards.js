@@ -2,11 +2,12 @@ import { getData } from './services/data'
 
 const cards = async () => {
 
-	const goodsWrapper = document.querySelector('.goods-wrapper');
+	const goodsWrapper = document.querySelector('.goods-wrapper'),
+		  spinner = document.getElementById('spinner');
 
 	await getData('db/db.json')
 		.then(response => {
-
+			spinner.style.display = 'none';
 			response.forEach(card => {
 				const div = document.createElement('div');
 				div.classList.add('card-wrapper', 'col-12', 'col-md-6', 'col-lg-4', 'col-xl-3', 'pb-3');
@@ -29,18 +30,6 @@ const cards = async () => {
 				goodsWrapper.appendChild(div)
 
 			});
-
-			// const cardImg = document.querySelectorAll('.card');
-
-			// cardImg.forEach(item => {
-			// 	item.addEventListener('click', (e) => {
-			// 		const target = e.target;
-
-			// 		if (target.classList.contains('card-img-top')) {
-			// 			console.log(target.src);
-			// 		}
-			// 	})
-			// })
 
 		})
 
