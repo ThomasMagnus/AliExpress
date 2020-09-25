@@ -7,15 +7,16 @@ const addToBasket = () => {
 		  cartTotal = document.querySelector('.cart-total span'),
 		  cartCounter = document.querySelector('#cart span');
 
-	const buysSelectors = [];
+	let buysSelectors = [];
 
 	// Создание элементов для создания карточек в корзине
 
 	const createElement = (element) => {
 		const div = document.createElement('div');
 		div.classList.add('goods');
+		div.dataset.id = element.id
 		div.innerHTML = `
-				<div class="goods-img-wrapper" data-id=${element.id}>
+				<div class="goods-img-wrapper">
 					<img class="goods-img" src=${element.imgMin} alt="">
 				</div>
 				<div class="goods-description">
@@ -32,17 +33,8 @@ const addToBasket = () => {
 			`;
 		cartWrapper.appendChild(div)
 
-		const buysObj = {
-			imgMin: element.imgMin,
-			price: element.price,
-			title: element.title,
-			id: element.id,
-		}
-		if (buysObj.id === element.id) {
-			buysSelectors.push(buysObj)
-			localStorage.setItem('buys', JSON.stringify(buysSelectors))
-		}
-
+		const p = cartWrapper.innerHTML;
+		localStorage.setItem('buys', p)
 	}
 
 	// Счетчик товаров отображающийся над корзиной
@@ -80,7 +72,6 @@ const addToBasket = () => {
 		}
 		createCounterGoods()
 	}
-
 	// Вывод общей цены в корзине
 
 	const plusPrice = () => {
@@ -97,36 +88,35 @@ const addToBasket = () => {
 
 	// Удаление покупок
 
-	const deleteBuys = () => {
-		if (document.querySelectorAll('.goods')) {
-			const goods = document.querySelectorAll('.goods')
+	cartWrapper.addEventListener('click', deleteBuys)
 
-			goods.forEach((item, i) => {
-				item.addEventListener('click', (e) => {
-					const target = e.target;
-					if (target.classList.contains('goods-delete')) {
-						target.closest('.goods').remove()
-					}
-					detectBuys()
-					plusPrice()
-					createCounter()
-				})
-			})
+	const deleteBuys = (e) => {
+		if (document.querySelectorAll('.goods').length === 0) {
+			cartEmpty.style.display = 'flex';
 		}
+		const target = e.target;
+		if (target.classList.contains('goods-delete')) {
+			target.closest('.goods').remove()
+			const p = cartWrapper.innerHTML;
+			localStorage.setItem('buys', p)
+		}
+		detectBuys()
+		plusPrice()
+		createCounter()
 	}
 
 	// Добавление в LocalStorage
 
 	const getOnLocalStorage = () => {
+		if (document.querySelectorAll('.goods').length === 0) {
+			cartEmpty.style.display = 'flex'
+		}
 		if (localStorage.getItem('buys')) {
-			const userBuys = JSON.parse(localStorage.getItem('buys'))
-			userBuys.forEach(item => {
-				createElement(item)
-				detectBuys()
-				plusPrice()
-				createCounter()
-				deleteBuys()
-			})
+			const p = localStorage.getItem('buys')
+			cartWrapper.innerHTML = p;
+			detectBuys()
+			plusPrice()
+			createCounter()
 		}
 	}
 
@@ -146,13 +136,14 @@ const addToBasket = () => {
 						detectBuys()
 						plusPrice()
 						createCounter()
-						deleteBuys()
+						// deleteBuys()
 					}
 
 				})
 			})
 	}
 	cardAddCart.forEach(item => item.addEventListener('click', addBuys))
+	cartWrapper.addEventListener('click', deleteBuys)
 }
 
 export default addToBasket

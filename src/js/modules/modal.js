@@ -5,10 +5,12 @@ const modal = () => {
 
 	const showModal = () => {
 		cart.style.display = 'flex';
+		document.body.style.overflow = 'hidden'
 	}
 
 	const closeModal = () => {
 		cart.style.display = 'none';
+		document.body.style.overflow = ''
 	}
 
 	cartBtn.addEventListener('click', showModal);
