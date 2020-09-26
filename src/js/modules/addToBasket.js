@@ -69,6 +69,7 @@ const addToBasket = () => {
 			cartEmpty.style.display = 'none';
 		} else {
 			cartEmpty.style.display = 'flex';
+			localStorage.clear()
 		}
 		createCounterGoods()
 	}
@@ -91,14 +92,14 @@ const addToBasket = () => {
 	cartWrapper.addEventListener('click', deleteBuys)
 
 	const deleteBuys = (e) => {
-		if (document.querySelectorAll('.goods').length === 0) {
-			cartEmpty.style.display = 'flex';
-		}
 		const target = e.target;
 		if (target.classList.contains('goods-delete')) {
 			target.closest('.goods').remove()
 			const p = cartWrapper.innerHTML;
 			localStorage.setItem('buys', p)
+		}
+		if (document.querySelectorAll('.goods').length === 0) {
+			document.querySelector('#cart-empty').style.display = 'flex'
 		}
 		detectBuys()
 		plusPrice()
@@ -108,9 +109,6 @@ const addToBasket = () => {
 	// Добавление в LocalStorage
 
 	const getOnLocalStorage = () => {
-		if (document.querySelectorAll('.goods').length === 0) {
-			cartEmpty.style.display = 'flex'
-		}
 		if (localStorage.getItem('buys')) {
 			const p = localStorage.getItem('buys')
 			cartWrapper.innerHTML = p;
